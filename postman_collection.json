@@ -1,0 +1,333 @@
+{
+  "info": {
+    "name": "A2 Ghee E-Commerce API",
+    "description": "Complete collection of endpoints for the A2 Ghee Backend. Includes dummy data.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "YOUR_ACCESS_TOKEN_HERE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "User Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Jane Doe\",\n    \"email\": \"jane.doe@example.com\",\n    \"phone\": \"9876543210\",\n    \"password\": \"SecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "signup"]
+            }
+          }
+        },
+        {
+          "name": "Admin Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"phone\": \"1234567890\",\n    \"password\": \"AdminPass123\",\n    \"adminSecret\": \"your_admin_signup_secret_here\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/admin/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "admin", "signup"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"jane.doe@example.com\",\n    \"password\": \"SecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Users",
+      "item": [
+        {
+          "name": "Get Me (Profile)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "me"]
+            }
+          }
+        },
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Products",
+      "item": [
+        {
+          "name": "Create Product (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Premium A2 Bilona Ghee", "type": "text" },
+                { "key": "slug", "value": "premium-a2-bilona-ghee", "type": "text" },
+                { "key": "description", "value": "[{\"header\": \"Benefits\", \"text\": \"Rich in Omega 3\", \"bulletPoints\": [\"Boosts Immunity\", \"Improves Digestion\"]}]", "type": "text" },
+                { "key": "quantities", "value": "[{\"label\": \"500ml\", \"value\": 500}, {\"label\": \"1 Liter\", \"value\": 1000}]", "type": "text" },
+                { "key": "prices", "value": "[{\"label\": \"MRP\", \"value\": 1999}, {\"label\": \"Discounted\", \"value\": 1499}]", "type": "text" },
+                { "key": "stock", "value": "50", "type": "text" },
+                { "key": "isActive", "value": "true", "type": "text" },
+                { "key": "productImages", "type": "file", "src": [] },
+                { "key": "descriptionImages", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          }
+        },
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?page=1&limit=10&keyword=ghee&sort=price",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "keyword", "value": "ghee" },
+                { "key": "sort", "value": "price" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id"],
+              "variable": [
+                { "key": "id", "value": "PRODUCT_ID_HERE" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Product (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "price", "value": "2099", "type": "text", "disabled": true },
+                { "key": "stock", "value": "45", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id"],
+              "variable": [
+                { "key": "id", "value": "PRODUCT_ID_HERE" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Product (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id"],
+              "variable": [
+                { "key": "id", "value": "PRODUCT_ID_HERE" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Reviews",
+      "item": [
+        {
+          "name": "Add Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "rating", "value": "5", "type": "text" },
+                { "key": "title", "value": "Amazing Quality!", "type": "text" },
+                { "key": "description", "value": "The aroma and texture are authentic. Highly recommended.", "type": "text" },
+                { "key": "stateName", "value": "Maharashtra", "type": "text" },
+                { "key": "reviewImage", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/:id/reviews",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id", "reviews"],
+              "variable": [
+                { "key": "id", "value": "PRODUCT_ID_HERE" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/:id/reviews",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id", "reviews"],
+              "variable": [
+                { "key": "id", "value": "PRODUCT_ID_HERE" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"products\": [\n        {\n            \"productId\": \"VALID_PRODUCT_ID_HERE\",\n            \"quantity\": 2,\n            \"priceAtPurchase\": 1499\n        }\n    ],\n    \"totalAmount\": 2998\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            }
+          }
+        },
+        {
+          "name": "Get My Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/my",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "my"]
+            }
+          }
+        },
+        {
+          "name": "Get All Orders (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
